@@ -12,7 +12,8 @@ def menu_principal(role):
         print("1 - Voir les Livres et Statistiques")
         print("2 - Emprunter un livre")
         print("3 - Retour de livre")
-        print("4 - Emprunts en retard")
+        print("4 - Emprunts en cours")
+        print("5 - Emprunts en retard")
         print("0 - Quitter")
         return input("Choix : ")
 

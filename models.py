@@ -179,6 +179,25 @@ def read_emprunts_retard(session):
             f"{row.amende}€"
         )
 
+def read_emprunts_en_cours(session):
+    resultats = session.execute(
+        text("SELECT * FROM v_emprunts_en_cours ORDER BY date_retour;")
+    )
+
+    print("\n=== EMPRUNTS EN COURS ===")
+    print("ID | Étudiant | ISBN | Emprunt | Retour | Amende")
+    print("-" * 80)
+
+    for row in resultats:
+        print(
+            f"{row.id_emprunt} | "
+            f"{row.prenom} {row.nom} | "
+            f"{row.isbn} | "
+            f"{row.date_emprunt} | "
+            f"{row.date_retour} | "
+            f"{row.amende}€"
+        )
+
 def update_emprunt(session):
     id_emprunt = int(input("ID emprunt : "))
     emprunt = session.get(Emprunt, id_emprunt)

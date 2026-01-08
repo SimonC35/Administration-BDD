@@ -19,7 +19,8 @@ from models import (
     read_emprunts,
     update_emprunt,
     delete_emprunt,
-    read_emprunts_retard
+    read_emprunts_retard,
+    read_emprunts_en_cours
 )
 
 def main():
@@ -62,6 +63,8 @@ def main():
             elif choix == "3":
                 update_emprunt(session)  # Retour de livre
             elif choix == "4":
+                read_emprunts_en_cours(session)
+            elif choix == "5":
                 read_emprunts_retard(session)
             elif choix == "0":
                 print("Au revoir !")
