@@ -5,22 +5,26 @@ from dotenv import load_dotenv
 
 from database import get_session
 from menu import menu_principal, menu_crud
-from models import (
-    create_etudiant,
-    read_etudiants,
-    update_etudiant,
-    delete_etudiant,
-    afficher_stats_livres,
-    create_livre,
-    read_livres,
-    update_livre,
-    delete_livre,
+from crud.emprunt import (
     create_emprunt,
     read_emprunts,
     update_emprunt,
     delete_emprunt,
     read_emprunts_retard,
     read_emprunts_en_cours
+)
+from crud.etudiant import (
+    create_etudiant,
+    read_etudiants,
+    update_etudiant,
+    delete_etudiant
+)
+from crud.livre import (
+    create_livre,
+    read_livres,
+    update_livre,
+    delete_livre,
+    afficher_stats_livres
 )
 
 def main():
