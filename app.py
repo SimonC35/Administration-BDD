@@ -3,7 +3,7 @@
 import os
 from dotenv import load_dotenv
 
-from connexion import get_session
+from database import get_session
 from menu import menu_principal, menu_crud
 from models import (
     create_etudiant,
@@ -28,6 +28,9 @@ def main():
     load_dotenv()
 
     role = input("Votre rôle (admin / bibliothecaire / etudiant) : ").lower()
+    if role not in ("admin", "bibliothecaire", "etudiant"):
+        print("Rôle invalide.")
+        return
 
     host = os.getenv("DB_HOST")
     port = os.getenv("DB_PORT")

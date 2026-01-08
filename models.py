@@ -16,6 +16,25 @@ class Etudiant(Base):
     date_inscription = Column(Date)
     solde_amende = Column(Float)
 
+class Livre(Base):
+    __tablename__ = 'livre'  # Nom table Postgres
+    
+    isbn = Column(String, primary_key=True)  # Clé primaire
+    titre = Column(String)
+    editeur = Column(String)
+    annee = Column(Integer)
+    exemplaires_dispo = Column(Integer)
+
+class Emprunt(Base):
+    __tablename__ = 'emprunt'  # Nom table Postgres
+    
+    id_emprunt = Column(Integer, primary_key=True)  # Clé primaire
+    id_etud = Column(Integer, ForeignKey('etudiant.id_etud'))
+    isbn = Column(String, ForeignKey('livre.isbn'))
+    date_emprunt = Column(Date)
+    date_retour = Column(Date, nullable=True)  # Peut être NULL si pas encore retourné
+    amende = Column(Float, default=0.0)
+
 def create_etudiant(session):
     nom = input("Nom : ").upper()
     prenom = input("Prénom : ")
@@ -32,12 +51,10 @@ def create_etudiant(session):
     session.commit()
     print(f" Étudiant créé (ID={etu.id_etud})")
 
-
 def read_etudiants(session):
     etudiants = session.query(Etudiant).all()
     for e in etudiants:
         print(f"{e.id_etud} | {e.prenom} {e.nom} | {e.email}")
-
 
 def update_etudiant(session):
     id_etu = int(input("ID étudiant : "))
@@ -48,7 +65,6 @@ def update_etudiant(session):
         print(" Étudiant modifié")
     else:
         print(" Étudiant introuvable")
-
 
 def delete_etudiant(session):
     id_etu = int(input("ID étudiant : "))
@@ -74,16 +90,6 @@ def afficher_stats_livres(session):
             f"{row.isbn} | {row.titre} | {row.editeur} | "
             f"{row.nb_emprunts} | {row.pourcentage_dispo}%"
         )
-
-
-class Livre(Base):
-    __tablename__ = 'livre'  # Nom table Postgres
-    
-    isbn = Column(String, primary_key=True)  # Clé primaire
-    titre = Column(String)
-    editeur = Column(String)
-    annee = Column(Integer)
-    exemplaires_dispo = Column(Integer)
 
 def create_livre(session):
     isbn = input("ISBN : ")
@@ -127,17 +133,6 @@ def delete_livre(session):
         print(" Livre supprimé")
     else:
         print(" Livre introuvable")
-
-
-class Emprunt(Base):
-    __tablename__ = 'emprunt'  # Nom table Postgres
-    
-    id_emprunt = Column(Integer, primary_key=True)  # Clé primaire
-    id_etud = Column(Integer, ForeignKey('etudiant.id_etud'))
-    isbn = Column(String, ForeignKey('livre.isbn'))
-    date_emprunt = Column(Date)
-    date_retour = Column(Date, nullable=True)  # Peut être NULL si pas encore retourné
-    amende = Column(Float, default=0.0)
 
 def create_emprunt(session):
     id_etud = int(input("ID étudiant : "))
