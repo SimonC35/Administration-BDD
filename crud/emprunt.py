@@ -44,7 +44,7 @@ def read_emprunts_retard(session):
 
 def read_emprunts_en_cours(session):
     resultats = session.execute(
-        text("SELECT * FROM v_emprunts_en_cours ORDER BY date_retour;")
+        text("SELECT * FROM v_emprunts_en_cours ORDER BY id_emprunt;")
     )
 
     print("\n=== EMPRUNTS EN COURS ===")
